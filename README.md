@@ -49,4 +49,4 @@ See [SOLUTION_GUIDE.md](SOLUTION_GUIDE.md) for the full technical walkthrough wi
 
 ## Context
 
-Built for Embla Medical (formerly Össur) — MedTech company classifying vendor price-list items into ISO 9999 codes for assistive products (prostheses, orthoses, compression therapy, wound care, mobility aids).
+MedTech company classifying vendor price-list items into ISO 9999 codes for assistive products (prostheses, orthoses, compression therapy, wound care, mobility aids).
