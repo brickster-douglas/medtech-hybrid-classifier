@@ -216,7 +216,7 @@ vendors = {
         "specialties": ["04 24", "09 06", "06 03"],
         "style": "compression",
     },
-]
+}
 
 # Product description templates per ISO subclass
 description_templates = {
