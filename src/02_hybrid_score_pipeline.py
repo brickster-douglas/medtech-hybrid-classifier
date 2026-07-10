@@ -50,6 +50,9 @@ MODEL_NAME = f"{CATALOG}.{SCHEMA}.item_classifier"
 CONFIDENCE_THRESHOLD = 0.85
 LLM_ENDPOINT = "databricks-meta-llama-3-3-70b-instruct"  # or your fine-tuned endpoint
 
+spark.sql(f"USE CATALOG {CATALOG}")
+spark.sql(f"USE SCHEMA {SCHEMA}")
+
 # COMMAND ----------
 
 # MAGIC %md
