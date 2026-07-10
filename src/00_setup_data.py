@@ -22,7 +22,7 @@ except Exception:
 try:
     SCHEMA = spark.conf.get("bundle.var.schema")
 except Exception:
-    SCHEMA = "embla_hybrid_classifier"
+    SCHEMA = "medtech_hybrid_classifier"
 
 try:
     spark.sql(f"CREATE CATALOG IF NOT EXISTS {CATALOG}")
@@ -141,7 +141,7 @@ random.seed(42)
 
 # Vendor profiles — each has specialties that influence item descriptions
 vendors = {
-    "Ossur Nordic": {
+    "Nordic Prosthetics": {
         "country": "IS", "currency": "EUR",
         "specialties": ["06 12", "06 24", "06 18"],
         "style": "prosthetic",

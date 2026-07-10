@@ -42,7 +42,7 @@ except Exception:
 try:
     SCHEMA = spark.conf.get("bundle.var.schema")
 except Exception:
-    SCHEMA = "embla_hybrid_classifier"
+    SCHEMA = "medtech_hybrid_classifier"
 MODEL_NAME = f"{CATALOG}.{SCHEMA}.item_classifier"
 
 # Monitoring thresholds
@@ -197,7 +197,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratif
 
 # COMMAND ----------
 
-experiment_name = f"/Users/{spark.sql('SELECT current_user()').first()[0]}/embla-hybrid-classifier"
+experiment_name = f"/Users/{spark.sql('SELECT current_user()').first()[0]}/medtech-hybrid-classifier"
 mlflow.set_experiment(experiment_name)
 
 with mlflow.start_run(run_name="retrained_with_corrections") as run:
@@ -294,7 +294,7 @@ dbutils.notebook.exit(f"RETRAIN:YES|OLD_ACC:{champion_accuracy:.4f}|NEW_ACC:{new
 # MAGIC
 # MAGIC monitor = w.quality_monitors.create(
 # MAGIC     table_name=f"{CATALOG}.{SCHEMA}.classified_items",
-# MAGIC     assets_dir=f"/Workspace/Users/{user}/monitors/embla_classifier",
+# MAGIC     assets_dir=f"/Workspace/Users/{user}/monitors/medtech_classifier",
 # MAGIC     output_schema_name=f"{CATALOG}.{SCHEMA}",
 # MAGIC     inference_log=ml.InferenceLog(
 # MAGIC         problem_type="classification",

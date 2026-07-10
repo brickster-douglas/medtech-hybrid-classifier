@@ -8,7 +8,7 @@ Hybrid ML + LLM classification for mapping vendor items to ISO 9999 assistive pr
 
 ```bash
 # Deploy to Databricks
-cd projects/embla-hybrid-classifier
+cd projects/medtech-hybrid-classifier
 databricks bundle deploy -t dev
 databricks bundle run hybrid_classifier_pipeline -t dev
 ```

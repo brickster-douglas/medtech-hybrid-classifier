@@ -44,7 +44,7 @@ except Exception:
 try:
     SCHEMA = spark.conf.get("bundle.var.schema")
 except Exception:
-    SCHEMA = "embla_hybrid_classifier"
+    SCHEMA = "medtech_hybrid_classifier"
 MODEL_NAME = f"{CATALOG}.{SCHEMA}.item_classifier"
 
 CONFIDENCE_THRESHOLD = 0.85

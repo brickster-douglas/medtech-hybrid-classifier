@@ -1,5 +1,5 @@
 bundle:
-  name: embla_hybrid_classifier
+  name: medtech_hybrid_classifier
 
 workspace:
   root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
@@ -10,7 +10,7 @@ variables:
     default: serverless_stable_m3qkky_catalog
   schema:
     description: Schema name
-    default: embla_hybrid_classifier
+    default: medtech_hybrid_classifier
 
 include:
   - resources/*.yml

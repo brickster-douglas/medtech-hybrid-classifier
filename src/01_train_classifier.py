@@ -27,7 +27,7 @@ except Exception:
 try:
     SCHEMA = spark.conf.get("bundle.var.schema")
 except Exception:
-    SCHEMA = "embla_hybrid_classifier"
+    SCHEMA = "medtech_hybrid_classifier"
 MODEL_NAME = f"{CATALOG}.{SCHEMA}.item_classifier"
 
 CONFIDENCE_THRESHOLD = 0.85  # Items below this go to LLM fallback
@@ -107,7 +107,7 @@ print(f"Train: {X_train.shape[0]}, Test: {X_test.shape[0]}")
 
 # COMMAND ----------
 
-experiment_name = f"/Users/{spark.sql('SELECT current_user()').first()[0]}/embla-hybrid-classifier"
+experiment_name = f"/Users/{spark.sql('SELECT current_user()').first()[0]}/medtech-hybrid-classifier"
 mlflow.set_experiment(experiment_name)
 
 models = {

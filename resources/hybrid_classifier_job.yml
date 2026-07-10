@@ -1,7 +1,7 @@
 resources:
   jobs:
     hybrid_classifier_pipeline:
-      name: "[${bundle.target}] Embla Hybrid Classifier Pipeline"
+      name: "[${bundle.target}] MedTech Hybrid Classifier Pipeline"
       tasks:
         - task_key: setup_data
           notebook_task:

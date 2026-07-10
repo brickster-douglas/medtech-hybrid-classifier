@@ -472,7 +472,7 @@ classified_df.write.mode("overwrite").parquet("/mnt/exports/classified_items/")
 ## Repository Structure
 
 ```
-embla-hybrid-classifier/
+medtech-hybrid-classifier/
 ├── databricks.yml                        # DAB bundle config
 ├── SOLUTION_GUIDE.md                     # This document
 ├── README.md                             # Quick start
