@@ -1,0 +1,39 @@
+resources:
+  jobs:
+    hybrid_classifier_pipeline:
+      name: "[${bundle.target}] Embla Hybrid Classifier Pipeline"
+      tasks:
+        - task_key: setup_data
+          notebook_task:
+            notebook_path: ../src/00_setup_data.py
+            source: WORKSPACE
+          environment_key: default
+
+        - task_key: train_classifier
+          depends_on:
+            - task_key: setup_data
+          notebook_task:
+            notebook_path: ../src/01_train_classifier.py
+            source: WORKSPACE
+          environment_key: default
+
+        - task_key: hybrid_score
+          depends_on:
+            - task_key: train_classifier
+          notebook_task:
+            notebook_path: ../src/02_hybrid_score_pipeline.py
+            source: WORKSPACE
+          environment_key: default
+
+        - task_key: monitor_retrain
+          depends_on:
+            - task_key: hybrid_score
+          notebook_task:
+            notebook_path: ../src/03_monitor_and_retrain.py
+            source: WORKSPACE
+          environment_key: default
+
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
