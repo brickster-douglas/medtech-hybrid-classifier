@@ -15,8 +15,14 @@
 
 # COMMAND ----------
 
-CATALOG = spark.conf.get("bundle.var.catalog", "serverless_stable_m3qkky_catalog")
-SCHEMA = spark.conf.get("bundle.var.schema", "embla_hybrid_classifier")
+try:
+    CATALOG = spark.conf.get("bundle.var.catalog")
+except Exception:
+    CATALOG = "serverless_stable_m3qkky_catalog"
+try:
+    SCHEMA = spark.conf.get("bundle.var.schema")
+except Exception:
+    SCHEMA = "embla_hybrid_classifier"
 
 try:
     spark.sql(f"CREATE CATALOG IF NOT EXISTS {CATALOG}")

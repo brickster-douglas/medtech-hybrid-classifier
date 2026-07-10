@@ -20,8 +20,14 @@
 
 # COMMAND ----------
 
-CATALOG = spark.conf.get("bundle.var.catalog", "serverless_stable_m3qkky_catalog")
-SCHEMA = spark.conf.get("bundle.var.schema", "embla_hybrid_classifier")
+try:
+    CATALOG = spark.conf.get("bundle.var.catalog")
+except Exception:
+    CATALOG = "serverless_stable_m3qkky_catalog"
+try:
+    SCHEMA = spark.conf.get("bundle.var.schema")
+except Exception:
+    SCHEMA = "embla_hybrid_classifier"
 MODEL_NAME = f"{CATALOG}.{SCHEMA}.item_classifier"
 
 CONFIDENCE_THRESHOLD = 0.85  # Items below this go to LLM fallback
