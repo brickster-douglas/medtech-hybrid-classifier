@@ -298,7 +298,33 @@ print(f"  LLM fallback:  {(classified['classification_method'] == 'llm_fallback'
 
 # COMMAND ----------
 
-df_classified = spark.createDataFrame(classified)
+# Ensure consistent types before Spark conversion
+classified["scored_at"] = pd.to_datetime(classified["scored_at"])
+classified["model_version"] = classified["model_version"].astype(str)
+classified["llm_reason"] = classified["llm_reason"].astype(str).replace("None", None)
+classified["ml_confidence"] = classified["ml_confidence"].astype(float)
+classified["final_confidence"] = classified["final_confidence"].astype(float)
+classified["unit_price"] = classified["unit_price"].astype(float)
+
+from pyspark.sql.types import StructType, StructField, StringType, FloatType, TimestampType
+
+schema = StructType([
+    StructField("item_id", StringType()),
+    StructField("vendor_name", StringType()),
+    StructField("product_description", StringType()),
+    StructField("unit_price", FloatType()),
+    StructField("currency", StringType()),
+    StructField("ml_predicted_iso", StringType()),
+    StructField("ml_confidence", FloatType()),
+    StructField("final_iso_code", StringType()),
+    StructField("classification_method", StringType()),
+    StructField("final_confidence", FloatType()),
+    StructField("scored_at", TimestampType()),
+    StructField("model_version", StringType()),
+    StructField("llm_reason", StringType()),
+])
+
+df_classified = spark.createDataFrame(classified, schema=schema)
 df_classified.write.mode("overwrite").saveAsTable(f"{CATALOG}.{SCHEMA}.classified_items")
 print(f"Wrote classified_items: {len(classified)} rows")
 
