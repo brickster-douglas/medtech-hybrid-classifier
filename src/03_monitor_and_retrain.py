@@ -225,9 +225,15 @@ with mlflow.start_run(run_name="retrained_with_corrections") as run:
         pickle.dump(artifacts, f)
     mlflow.log_artifact("/tmp/inference_artifacts.pkl")
 
+    from mlflow.models import infer_signature
+    sample_input = X_test[:5]
+    sample_output = model.predict(sample_input)
+    signature = infer_signature(sample_input, sample_output)
+
     model_info = mlflow.sklearn.log_model(
         model,
         artifact_path="model",
+        signature=signature,
         registered_model_name=MODEL_NAME,
     )
 

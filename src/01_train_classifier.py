@@ -179,10 +179,16 @@ with mlflow.start_run(run_name=f"champion_{best_name}") as run:
         pickle.dump(artifacts, f)
     mlflow.log_artifact("/tmp/inference_artifacts.pkl")
 
-    # Register model
+    # Register model (input_example required for UC model signature)
+    from mlflow.models import infer_signature
+    sample_input = X_test[:5]
+    sample_output = best["model"].predict(sample_input)
+    signature = infer_signature(sample_input, sample_output)
+
     model_info = mlflow.sklearn.log_model(
         best["model"],
         artifact_path="model",
+        signature=signature,
         registered_model_name=MODEL_NAME,
     )
     print(f"Registered model: {MODEL_NAME}")
