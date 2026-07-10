@@ -120,7 +120,7 @@ if not should_retrain:
         print(f"  Need {MIN_CORRECTIONS_TO_RETRAIN - len(corrections)} more expert corrections before retraining.")
     else:
         print("\n✓ Model is performing within acceptable thresholds.")
-    dbutils.notebook.exit(f"RETRAIN:NO|AVG_CONF:{avg_conf:.4f}|LOW_PCT:{low_conf_pct:.1f}|CORRECTIONS:{len(corrections)}")
+    dbutils.notebook.exit(f"RETRAIN:NO|AVG_CONF:{avg_conf:.4f}|LOW_PCT:{llm_fallback_pct:.1f}|CORRECTIONS:{len(corrections)}")
 
 # COMMAND ----------
 
