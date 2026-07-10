@@ -325,6 +325,7 @@ schema = StructType([
 ])
 
 df_classified = spark.createDataFrame(classified, schema=schema)
+spark.sql(f"DROP TABLE IF EXISTS {CATALOG}.{SCHEMA}.classified_items")
 df_classified.write.mode("overwrite").saveAsTable(f"{CATALOG}.{SCHEMA}.classified_items")
 print(f"Wrote classified_items: {len(classified)} rows")
 
@@ -367,28 +368,22 @@ if "_ground_truth_iso" in eval_df.columns:
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC -- Quick classification into ISO classes using ai_classify (no training needed)
-# MAGIC -- This is useful for triage or when you don't have labeled data yet
-# MAGIC -- ai_classify takes a JSON string: array for simple labels, object for label+description
-# MAGIC SELECT
-# MAGIC   item_id,
-# MAGIC   product_description,
-# MAGIC   ai_classify(
-# MAGIC     product_description,
-# MAGIC     '{
-# MAGIC       "Orthoses — spinal": "Spinal braces, lumbar supports, cervical collars, TLSO",
-# MAGIC       "Orthoses — upper limb": "Hand splints, wrist braces, elbow supports, shoulder immobilizers",
-# MAGIC       "Orthoses — lower limb": "AFOs, knee braces, KAFOs, foot orthoses, hip braces",
-# MAGIC       "Prostheses — upper limb": "Hand prostheses, transradial, transhumeral, myoelectric arms",
-# MAGIC       "Prostheses — lower limb": "Transtibial, transfemoral, knee units, prosthetic feet, liners",
-# MAGIC       "Prostheses — non-limb": "Breast forms, ocular, auricular, nasal prostheses",
-# MAGIC       "Compression therapy": "Compression stockings, arm sleeves, anti-embolism",
-# MAGIC       "Wound care": "Dressings, wound closure, NPWT, irrigation",
-# MAGIC       "Mobility aids": "Wheelchairs, crutches, rollators, walking sticks",
-# MAGIC       "Therapeutic footwear": "Orthopedic shoes, insoles, therapeutic footwear"
-# MAGIC     }',
-# MAGIC     MAP('version', '2.0')
-# MAGIC   ) AS broad_category
-# MAGIC FROM new_items
-# MAGIC LIMIT 10
+# ai_classify example — run interactively, not as part of the pipeline job
+# Uncomment and run manually in the notebook UI:
+#
+# %sql
+# SELECT
+#   item_id,
+#   product_description,
+#   ai_classify(
+#     product_description,
+#     '{"Orthoses — spinal": "Spinal braces, lumbar supports, cervical collars",
+#       "Orthoses — lower limb": "AFOs, knee braces, KAFOs, foot orthoses",
+#       "Prostheses — lower limb": "Transtibial, transfemoral, knee units, prosthetic feet",
+#       "Compression therapy": "Compression stockings, arm sleeves",
+#       "Wound care": "Dressings, wound closure, NPWT",
+#       "Mobility aids": "Wheelchairs, crutches, rollators"}',
+#     MAP('version', '2.0')
+#   ) AS broad_category
+# FROM new_items
+# LIMIT 10
