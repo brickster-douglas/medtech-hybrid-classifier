@@ -1,4 +1,4 @@
-# Embla Hybrid Classifier
+# MedTech Hybrid Classifier
 
 Hybrid ML + LLM classification for mapping vendor items to ISO 9999 assistive product codes.
 
